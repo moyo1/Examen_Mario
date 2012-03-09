@@ -1,0 +1,179 @@
+<html>
+
+   <head></head>
+   <title> Blog Sistemas </title> 
+   <body bgcolor="#D8D8D8">
+   <font color="#8A0829">
+
+	 <br>
+	<br>
+	<center><font size=12>  Blog Sistemas   </font></center>
+
+
+       <p align="right"> 
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<script language="JavaScript" type="text/javascript">
+
+var idContenedor = "miCalendario"
+var hoy = new Date()
+var mes = hoy.getMonth()
+var dia = 1
+var anio = hoy.getFullYear()
+var diasSemana = new Array ('L','M','M','J','V','S','D')
+var meses = new Array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre')
+var tunIex=navigator.appName=="Microsoft Internet Explorer"?true:false;
+if(tunIex && navigator.userAgent.indexOf('Opera')>=0){tunIex = false}
+tunOp = navigator.userAgent.indexOf('Opera')>=0 ? true: false;
+function tunCalendario(){
+	dia2 = dia
+	tab = document.createElement('table')
+	tab.id = 'calendario'
+	document.getElementById(idContenedor).appendChild(tab)
+	tcabeza = document.createElement('thead')
+	tab.appendChild(tcabeza)
+	fi2 = document.createElement('tr')
+	fi2b = document.createElement('th')
+	fi2b.colSpan = 7
+	fi2.id = 'mesCalendario'
+	fi2b.appendChild(document.createTextNode(meses[mes] + "  -  " + anio))
+	fi2.appendChild(fi2b)
+	tcabeza.appendChild(fi2)
+	fi = document.createElement('tr')
+	tcabeza.appendChild(fi)
+	for(m=0;m<7;m++){
+		ce = document.createElement('th')
+		ce.appendChild(document.createTextNode(diasSemana[m]))
+		fi.appendChild(ce)
+		if(m == 6){ce.style.marginRight = 0}
+		}
+		var escribe = false
+		var escribe2 = true
+	fecha = new Date(anio,mes,dia)
+	var d = fecha.getDay()-1 //dia semana
+	if(d<0){d = 6}
+	tcuerpo = document.createElement('tbody')
+	tab.appendChild(tcuerpo)
+	while(escribe2){
+		fi = document.createElement('tr')
+		co = 0
+		for(t=0;t<7;t++){
+			ce = document.createElement('td')
+			if(escribe && escribe2){
+			fecha2 = new Date(anio,mes,dia)
+			
+				if(fecha2.getMonth() != mes){escribe2 = false;}
+				else{ce.appendChild(document.createTextNode(dia));dia++;co++}
+			}
+			if(d == t && !escribe){
+			ce.appendChild(document.createTextNode(dia))
+			dia++;co++
+			escribe = true
+			}
+			fi.appendChild(ce)
+			if(hoy.getDate()+1 == dia && mes == hoy.getMonth() && anio == hoy.getFullYear()){ce.className = "Hoy"}
+			}
+			
+		if(co>0){tcuerpo.appendChild(fi)}
+		
+		}
+	dia = dia2
+}
+function borra(){
+document.getElementById(idContenedor).removeChild(document.getElementById('calendario'))
+}
+function establecerFecha(){
+tunFe = new Date()
+document.getElementById('tunMes').options[tunFe.getMonth()].selected = true
+document.getElementById('tunAnio').value = tunFe.getFullYear()
+}
+</script>
+<style type="text/css">
+#calendario{
+	font-family: Tahoma, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	border-right: 2px solid #999999;
+	border-bottom: 2px solid #999999;
+}
+
+/*#mesCalendario para configurar aspectos de la caja que muestra el mes y el año*/
+#mesCalendario{
+	font-weight: bold;
+	text-align: center;
+	color: #CC6633;
+	background-color: #E4CAAF;
+
+
+}
+#calendario th, #calendario td{
+	border: 1px solid #999999;
+	padding: 3px;
+	font-size: 110%;
+}
+#calendario th{
+	color: #CC6633;
+}
+/*.Hoy para configurar aspectos de la caja que muestra el día actual*/
+.Hoy{
+	color: #ffffff;
+	background-color: #666666;
+	font-weight: normal;
+}
+#miCalendario{
+	text-align: center;
+}
+/*.selectores para configurar aspectos de los campos para el mes y el año*/
+.selectores{
+	font-family: verdana;
+	font-size: 10px;
+	color: #990000;
+	margin-bottom: 2px;
+}
+</style>
+</head>
+
+<body onLoad="tunCalendario();establecerFecha()">
+<div id="miCalendario">  
+<select id="tunMes" class="selectores" onchange="mes=this.selectedIndex;borra();tunCalendario()">
+    <option value="0" selected>Enero</option>
+    <option value="1">Febrero</option>
+    <option value="2">Marzo</option>
+    <option value="3">Abril</option>
+    <option value="4">Mayo</option>
+    <option value="5">Junio</option>
+    <option value="6">Julio</option>
+    <option value="7">Agosto</option>
+    <option value="8">Septiembre</option>
+    <option value="9">Octubre</option>
+    <option value="10">Noviembre</option>
+    <option value="11">Diciembre</option>
+  </select>
+  <input type="text" id="tunAnio" class="selectores" onblur="if(!isNaN(this.value)){anio=this.value;borra();tunCalendario()}" size="4" maxlength="4" />
+</div>
+
+</P>
+
+	<br>
+       <form id="blog" action="blog.php"method="POST">
+       <b> Tema:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    
+       <input type="text" id="textBox1" name="textBox1">
+       <br>
+	<br>
+       <b>Cuatrimestre:</b> &nbsp;&nbsp;&nbsp;&nbsp;
+       <input type="text" id="textBox2" name="textBox2">
+       <br>
+	<br>
+       <center><textarea name="comments" onmouseover="this.style.backgroundColor='#8A0829'" style="background-color:'#FF9900'" onmouseout="this.style.backgroundColor='#F2F2F2'" />
+       </textarea>
+       <br>
+	<br>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" id="button1" name="button1" value="Postear">
+	</center>
+       </form>
+
+     </body>
+
+</html>
